@@ -1,2 +1,1 @@
-# react
-Reactの練習用のリポジトリ
+## react_sandbox
