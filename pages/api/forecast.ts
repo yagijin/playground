@@ -6,40 +6,56 @@ type Request = {
   areaId: string
 }
 
-type Response = {
-  date: string
-  weather: string
-  imageUrl: string
-}[]
+type Response =
+  | {
+      date: string
+      weather: string
+      imageUrl: string
+    }[]
+  | { error: { message: string } }
 
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Response>
 ) {
+  if (!req.query?.areaId) {
+    return res
+      .status(400)
+      .json({ error: { message: '正しくqueryを設定してください' } })
+  }
+
   fetch(
     `https://www.jma.go.jp/bosai/forecast/data/forecast/${req.query?.areaId}.json`
-  ).then(async (response) => {
-    const result: any = await response.json()
-    const areaForecast = result?.[1]?.timeSeries?.[0]
-    const weatherReport = []
-    for (let i = 0; i < 7; i++) {
-      weatherReport[i] = {
-        date: areaForecast?.timeDefines[i] ?? '',
-        weather:
-          // todo: typeチェックする
-          // @ts-ignore
-          weatherCodes[`${areaForecast?.areas?.[0]?.weatherCodes?.[i]}`]?.[3] ??
-          '不明',
-        imageUrl: weatherImageUrl(
-          // @ts-ignore
-          weatherCodes[`${areaForecast?.areas?.[0]?.weatherCodes?.[i]}`]?.[0] ??
-            ''
-        ),
+  )
+    .then(async (response) => {
+      const result: any = await response.json()
+      const areaForecast = result?.[1]?.timeSeries?.[0]
+      const weatherReport = []
+      for (let i = 0; i < 7; i++) {
+        weatherReport[i] = {
+          date: areaForecast?.timeDefines[i] ?? '',
+          weather:
+            // todo: typeチェックする
+            // @ts-ignore
+            weatherCodes[
+              `${areaForecast?.areas?.[0]?.weatherCodes?.[i]}`
+            ]?.[3] ?? '不明',
+          imageUrl: weatherImageUrl(
+            // @ts-ignore
+            weatherCodes[
+              `${areaForecast?.areas?.[0]?.weatherCodes?.[i]}`
+            ]?.[0] ?? ''
+          ),
+        }
       }
-    }
 
-    res.status(200).json(weatherReport)
-  })
+      return res.status(200).json(weatherReport)
+    })
+    .catch(() => {
+      return res
+        .status(500)
+        .json({ error: { message: '内部エラーが発生しました' } })
+    })
 }
 
 //const weatherImageUrl = (filename: string) => `https://www.jma.go.jp/bosai/forecast/img/${filename}`

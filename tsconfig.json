@@ -24,6 +24,9 @@
       ],
       "@/organisms/*": [
         "components/organisms/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
       ]
     }
   },
