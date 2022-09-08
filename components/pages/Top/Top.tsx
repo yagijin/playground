@@ -9,6 +9,9 @@ const Top: FC<props> = ({}) => {
       <li>
         <Link href="/leaflet">Leaflet</Link>
       </li>
+      <li>
+        <Link href="/wasm_ruby">wasm-ruby</Link>
+      </li>
     </ul>
   )
 }

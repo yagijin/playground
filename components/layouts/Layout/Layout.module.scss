@@ -1,5 +1,13 @@
 
 
 .header, .footer {
-  background-color: #cfcfcf;
+  background-color: red;
+  height: 5rem;
+}
+
+.footer {
+  width: 100%;
+
+  position: absolute;
+  bottom: 0;
 }
