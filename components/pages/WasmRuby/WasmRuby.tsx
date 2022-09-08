@@ -5,7 +5,7 @@ import styles from './WasmRuby.module.scss'
 
 type props = {}
 
-let rubyVM
+let rubyVM: any
 
 const WasmRuby: FC<props> = ({}) => {
   const [code, setCode] = useState('')
@@ -20,16 +20,6 @@ const WasmRuby: FC<props> = ({}) => {
       rubyVM = await DefaultRubyVM(moduleWasm)
 
       rubyVM.vm.printVersion()
-
-      try {
-        rubyVM.vm.eval(`
-          require "js"
-          luckiness = ["Lucky", "Unlucky"].sample
-          #JS::eval("document.getElementById('wasm-container').innerText = '#{luckiness}'")
-      `)
-      } catch (err) {
-        console.log(err)
-      }
     })()
   }, [])
   return (
@@ -52,7 +42,7 @@ const WasmRuby: FC<props> = ({}) => {
           onClick={() => {
             try {
               setExecResult(rubyVM.vm.eval(code).toString())
-            } catch (err) {
+            } catch (err: any) {
               setExecResult(err)
             }
           }}
