@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
@@ -43,8 +43,8 @@ const Forecast: FC<props> = ({ forecast }) => {
                 <Image
                   src={dayForecast.imageUrl}
                   alt={`${dayForecast.weather}の天気アイコン`}
-                  width={'50px'}
-                  height={'50px'}
+                  width={50}
+                  height={50}
                 />
               </td>
             </tr>
