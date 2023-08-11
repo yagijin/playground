@@ -7,7 +7,7 @@ const Home: NextPage = () => {
     <Layout
       head={{
         title: 'top',
-        description: 'reactのsandboxのトップページ',
+        description: 'playgroundのトップページ',
       }}
     >
       <TopPage />
