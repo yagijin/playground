@@ -4,14 +4,13 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import ja from 'dayjs/locale/ja'
-import styles from './Forecast.module.scss'
 
 dayjs.locale(ja)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
 type props = {
-  forecast: {
+  forecast?: {
     date: string
     weather: string
     imageUrl: string
@@ -32,7 +31,7 @@ const Forecast: FC<props> = ({ forecast }) => {
         </tr>
       </thead>
       <tbody>
-        {forecast.map((dayForecast) => {
+        {forecast?.map((dayForecast) => {
           return (
             <tr key={dayForecast.date}>
               <td>
