@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
