@@ -15,7 +15,7 @@ const Top: FC<props> = ({}) => {
         noOfLines={1}
         style={{ margin: '0 2rem 2rem 0', borderBottom: '2px dashed #595959' }}
       >
-        ページたち
+        Playground
       </Heading>
       <List spacing={3}>
         <ListItem>
@@ -28,7 +28,7 @@ const Top: FC<props> = ({}) => {
         </ListItem>
         <ListItem>
           <ListIcon as={AiOutlineLink} color="green.500" />
-          <Link href="/leaflet">地図</Link>
+          <Link href="/map">地図</Link>
         </ListItem>
         <ListItem>
           <ListIcon as={AiOutlineLink} color="green.500" />

@@ -2,5 +2,5 @@
 // css-modulesで読み込むとprefixがついてしまう + 自前のコンポーネントで使用しないとビルド時に省略されるので
 // pages/_app.tsxでglobalに読み込んでいる
 .leaflet-container {
-  height: 500px;
+  min-height: 700px;
 }

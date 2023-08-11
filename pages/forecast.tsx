@@ -1,7 +1,28 @@
 import type { NextPage } from 'next'
 import Error from 'next/error'
 import Layout from '@/layouts/Layout'
-import ForecastPage from '@/pages/Forecast'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+import ja from 'dayjs/locale/ja'
+import Image from 'next/legacy/image'
+import Link from 'next/link'
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Heading,
+  Text,
+} from '@chakra-ui/react'
+
+dayjs.locale(ja)
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 export async function getServerSideProps() {
   const response = await fetch(
@@ -63,7 +84,9 @@ type props = {
 }
 
 const Forecast: NextPage<props> = ({ data, error }) => {
+  dayjs.locale(ja)
   if (error) return <Error statusCode={error.code} title={error.title} />
+
   return (
     <Layout
       head={{
@@ -71,7 +94,60 @@ const Forecast: NextPage<props> = ({ data, error }) => {
         description: '天気予報',
       }}
     >
-      <ForecastPage forecast={data} />
+      <div
+        style={{
+          margin: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+        }}
+      >
+        <Heading as="h1" size="xl">
+          天気予報
+        </Heading>
+        <Text>
+          静岡県の天気を気象庁のAPIから取得して表示しています。取得にはNext.jsのAPI
+          Routesを使用しているので別のページでも簡単に参照することができます。
+        </Text>
+        <TableContainer>
+          <Table variant="simple">
+            <TableCaption>
+              出典：
+              <Link href="https://www.data.jma.go.jp/developer/index.html">
+                気象庁
+              </Link>
+            </TableCaption>
+            <Thead>
+              <Tr>
+                <Th>日付</Th>
+                <Th>天気</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data?.map((dayForecast) => {
+                return (
+                  <Tr key={dayForecast.date}>
+                    <Td>
+                      {dayjs(dayForecast.date)
+                        .tz('Asia/Tokyo')
+                        .format('MM/DD(dd)')}
+                    </Td>
+                    <Td>{dayForecast.weather}</Td>
+                    <Td>
+                      <Image
+                        src={dayForecast.imageUrl}
+                        alt={`${dayForecast.weather}の天気アイコン`}
+                        width={50}
+                        height={50}
+                      />
+                    </Td>
+                  </Tr>
+                )
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </div>
     </Layout>
   )
 }
