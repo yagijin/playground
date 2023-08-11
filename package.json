@@ -10,7 +10,6 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.1.0",
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -25,6 +24,7 @@
     "node-fetch": "^3.2.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.10.1",
     "react-leaflet": "^4.0.1",
     "ruby-head-wasm-wasi": "^0.3.0"
   },

@@ -1,7 +1,9 @@
 import { FC, ReactNode } from 'react'
 import Head from 'next/head'
 import styles from './Layout.module.scss'
-import { Center } from '@chakra-ui/react'
+import { Center, IconButton, Text, Divider } from '@chakra-ui/react'
+import { AiFillHome, AiOutlineGithub } from 'react-icons/ai'
+import Link from 'next/link'
 
 type props = {
   children: ReactNode
@@ -22,8 +24,27 @@ const Layout: FC<props> = ({ children, head }) => {
         </Head>
       )}
       <main>{children}</main>
-      <footer className={styles.footer}>
-        <Center h="5rem">footerだよ</Center>
+      <Divider />
+      <footer>
+        <Center h="5rem" color="teal" style={{ gap: '1rem' }}>
+          <Text>Playground</Text>
+          <Link href={'/'}>
+            <IconButton
+              colorScheme="teal"
+              aria-label="back"
+              size="lg"
+              icon={<AiFillHome />}
+            />
+          </Link>
+          <Link href={'https://github.com/yagijin/playground'}>
+            <IconButton
+              colorScheme="teal"
+              aria-label="back"
+              size="lg"
+              icon={<AiOutlineGithub />}
+            />
+          </Link>
+        </Center>
       </footer>
     </div>
   )
